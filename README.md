@@ -1,8 +1,18 @@
 # 🧠 AI Emotion Analytics System
 
-A real-time computer vision application that captures live webcam footage and analyzes facial expressions using DeepFace, OpenCV, and Streamlit. The app detects dominant emotions in real time and presents them on an interactive dashboard.
+A real-time computer vision application that captures live webcam footage and analyzes facial expressions using DeepFace, OpenCV, and Streamlit. The app detects the dominant emotion in real time and presents it on an interactive dashboard.
 
-This project is designed for educational and research use and showcases how AI can interpret human sentiment from visual cues in applications such as HCI, sentiment monitoring, learning analytics, and user experience research.
+This project is designed for educational and research use and showcases how AI can interpret human sentiment from visual cues in applications such as human-computer interaction, sentiment monitoring, learning analytics, and user experience research.
+
+## 📊 Dataset Type
+
+This project does not rely on a custom offline dataset stored in the repository. Instead, it uses:
+
+- Real-time webcam video input as the live data source
+- Pretrained DeepFace facial emotion models for inference
+- No manual dataset upload is required during normal usage
+
+In short, the system works on streaming image data captured from the user’s camera and processes it using a pretrained deep learning model.
 
 ## ✨ Features
 
