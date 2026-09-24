@@ -1,60 +1,73 @@
-# 🧠 Real-Time AI Emotion Analytics Dashboard
+# 🧠 AI Emotion Analytics System
 
-An intelligent monitoring tool that captures **live video** and uses **Deep Learning** to detect and analyze human facial emotions in real-time — powered by DeepFace, OpenCV, and Streamlit.
+A real-time computer vision application that captures live webcam footage and analyzes facial expressions using DeepFace, OpenCV, and Streamlit. The app detects dominant emotions in real time and presents them on an interactive dashboard.
 
----
+This project is designed for educational and research use and showcases how AI can interpret human sentiment from visual cues in applications such as HCI, sentiment monitoring, learning analytics, and user experience research.
 
-## 📌 Project Overview
+## ✨ Features
 
-The AI Emotion Analytics System demonstrates how AI can "see" and interpret human sentiment directly from a webcam feed. Potential applications include:
+- Real-time webcam emotion detection
+- Live video stream with face bounding box overlay
+- Dominant emotion classification from seven categories
+- Confidence scoring for detected emotions
+- Streamlit-based interactive dashboard
+- Lightweight and easy to run locally
 
-- 🛍️ Customer feedback & sentiment monitoring
-- 🧘 Mental health awareness tools
-- 🎓 Smart & adaptive education platforms
-- 📊 UX research and human-computer interaction
+### Supported emotions
 
----
+- Angry
+- Disgust
+- Fear
+- Happy
+- Sad
+- Surprise
+- Neutral
 
-## 🛠️ Tech Stack
+## 🧩 Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend UI | [Streamlit](https://streamlit.io/) |
-| Computer Vision | [OpenCV](https://opencv.org/) (`cv2`) |
-| Deep Learning Engine | [DeepFace](https://github.com/serengil/deepface) + TensorFlow |
-| Data Visualization | Streamlit Native + Custom HTML/CSS Cards |
+| Component | Technology |
+| --- | --- |
+| UI | Streamlit |
+| Computer Vision | OpenCV |
+| AI / Emotion Recognition | DeepFace + TensorFlow |
+| Visualization | Streamlit HTML/CSS cards |
 
----
+## 🏗️ Project Structure
 
-## 🎭 Detectable Emotions
+```bash
+AI-Emotion-Analytics-System/
+├── app.py                 # Main Streamlit application
+├── requirements.txt       # Python dependencies
+├── README.md              # Project documentation
+├── emotion_analytics.zip  # Archived project assets / export
+└── LICENSE                # License file (if present in the repo)
+```
 
-| Emotion | Color |
-|---|---|
-| 😠 Angry | Red |
-| 🤢 Disgust | Purple |
-| 😨 Fear | Orange |
-| 😄 Happy | Yellow |
-| 😢 Sad | Blue |
-| 😲 Surprise | Teal |
-| 😐 Neutral | Grey |
-
----
-
-## 🚀 Quick Start
+## 🚀 Getting Started
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/ai-emotion-analytics.git
-cd ai-emotion-analytics
+git clone https://github.com/nibin12343/AI-Emotion-Analytics-System.git
+cd AI-Emotion-Analytics-System
 ```
 
-### 2. (Optional) Set DeepFace model directory
+### 2. Create a virtual environment (recommended)
 
-By default, models are saved to `D:\deepface_models`. To change this, update the path at the top of `app.py`:
+```bash
+python -m venv venv
+```
 
-```python
-os.environ.setdefault("DEEPFACE_HOME", "/your/custom/path")
+On Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+On macOS/Linux:
+
+```bash
+source venv/bin/activate
 ```
 
 ### 3. Install dependencies
@@ -63,86 +76,101 @@ os.environ.setdefault("DEEPFACE_HOME", "/your/custom/path")
 pip install -r requirements.txt
 ```
 
-**`requirements.txt`** should include:
-
-```
-streamlit
-opencv-python
-deepface
-tensorflow
-pandas
-```
-
 ### 4. Run the application
 
 ```bash
 streamlit run app.py
 ```
 
-Then open [http://localhost:8501](http://localhost:8501) in your browser, check **▶ Start Camera** in the sidebar, and the system begins analysing your expressions live.
+Then open the local URL shown in the terminal, typically:
 
----
-
-## ⚙️ How It Works
-
+```text
+http://localhost:8501
 ```
+
+In the Streamlit sidebar, enable the camera by checking the Start Camera option.
+
+## ⚙️ Model Configuration
+
+The project sets a default DeepFace model directory in `app.py`:
+
+```python
+os.environ.setdefault("DEEPFACE_HOME", "D:\deepface_models")
+```
+
+If you want to store the models elsewhere, update that path to a folder you prefer.
+
+Example:
+
+```python
+os.environ.setdefault("DEEPFACE_HOME", "/your/custom/path")
+```
+
+## 🧠 How It Works
+
+1. The webcam captures live frames using OpenCV.
+2. Each selected frame is analyzed by DeepFace for facial expressions.
+3. The app extracts the emotion probabilities and detects the dominant emotion.
+4. The system updates the UI with a live confidence card and overlays the detected face region on the image.
+5. The result is displayed in real time through the Streamlit dashboard.
+
+## 🧪 Example Workflow
+
+```text
 Webcam Feed
-    │
-    ▼
-┌─────────────────────────┐
-│  OpenCV Frame Capture   │  — Reads frames in real time
-└────────────┬────────────┘
-             │ every 3rd frame
-             ▼
-┌─────────────────────────┐
-│  DeepFace.analyze()     │  — Runs CNN-based emotion model
-└────────────┬────────────┘
-             │
-    ┌────────┴────────┐
-    ▼                 ▼
-Face Region       Emotion Scores
-(x, y, w, h)   (7 probabilities)
-    │                 │
-    ▼                 ▼
-Bounding Box    Dominant Emotion
-drawn on frame  + Confidence Card
+   │
+   ▼
+OpenCV Frame Capture
+   │
+   ▼
+DeepFace.analyze(action='emotion')
+   │
+   ▼
+Emotion probabilities + dominant emotion
+   │
+   ▼
+Live dashboard + face bounding box overlay
 ```
 
-1. **Live Video Stream** — Webcam frames are captured continuously via OpenCV.
-2. **Facial Landmark Detection** — DeepFace identifies the face bounding box `(x, y, w, h)` and overlays it on the video feed.
-3. **Emotion Classification** — The deep learning model scores all 7 emotions and returns the dominant one with a confidence percentage.
-4. **Live Analytics Card** — A dynamic confidence card updates in real time, colour-coded per emotion.
+## 🛠️ Troubleshooting
 
-> **Performance note:** Analysis runs on every 3rd frame (`frame_skip % 3`) to keep the UI responsive while maintaining smooth video playback.
+### Webcam not opening
 
----
+- Make sure your webcam is connected and not already in use by another app.
+- Try restarting the app after granting camera access.
+- If using a remote environment, ensure the system supports local camera access.
 
-## 📁 Project Structure
+### DeepFace model download issues
 
+- Ensure you have a stable internet connection for the first model download.
+- Verify that the `DEEPFACE_HOME` path is writable.
+- If the app fails to load models, try creating the target folder manually before running the app.
+
+### Dependency errors
+
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
-ai-emotion-analytics/
-│
-├── app.py                  # Main Streamlit application
-├── requirements.txt        # Python dependencies
-└── README.md               # Project documentation
-```
-
----
 
 ## ⚠️ Disclaimer
 
-This project is for **educational and research purposes only**. It is not intended for use in production systems involving surveillance, profiling, or any application without the informed consent of participants.
-
----
+This project is intended for educational, research, and demonstration purposes only. It is not meant for surveillance, profiling, or decision-making systems without explicit consent and proper ethical review.
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
-
----
+This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## 🙏 Acknowledgements
 
-- [DeepFace](https://github.com/serengil/deepface) by Sefik Ilkin Serengil
-- [OpenCV](https://opencv.org/) community
-- [Streamlit](https://streamlit.io/) for the rapid UI framework
+- [DeepFace](https://github.com/serengil/deepface)
+- [OpenCV](https://opencv.org/)
+- [Streamlit](https://streamlit.io/)
+- TensorFlow community
+
+## 📌 Notes
+
+- The app analyzes frames every few iterations to balance performance and responsiveness.
+- The UI is built for local demonstration and quick experimentation rather than large-scale production deployment.
+
+If you want, I can also help you turn this into a more polished GitHub-style README with badges, a screenshot section, and a demo GIF placeholder.
